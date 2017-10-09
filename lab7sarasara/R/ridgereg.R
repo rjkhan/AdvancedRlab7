@@ -1,3 +1,12 @@
+#' @title Reference class for ridge regression
+#' @description Create a ridgereg class containing all necessary methods for fitting a ridge regression model
+#' @field formula A formula for the ridge regression
+#' @field data A data set for the ridge regression
+#' @field lambda The ridge constant, a numeric scalar
+#' @export ridgereg
+#' @exportClass ridgereg
+
+
 #kom ihåg att använda scale på x variablerna i testen med lm.ridge
 
 ridgereg<-setRefClass("ridgereg",
