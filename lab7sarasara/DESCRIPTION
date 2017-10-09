@@ -12,5 +12,4 @@ Description: A package to fit a ridge regression model
 License: GPL-2
 Imports: methods
 RoxygenNote: 6.0.1
-
-
+Suggests: testthat, MASS

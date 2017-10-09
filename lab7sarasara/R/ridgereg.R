@@ -45,7 +45,7 @@ ridgereg<-setRefClass("ridgereg",
                         "Prints out the formula and the estimated coefficients"
 
                         cat("Call:", "\n")
-                        cat("linreg(", deparse(formula), ")", "\n", "\n", sep="")
+                        cat("ridgereg(formula = ", deparse(formula), ", data = ", name, ", lambda = ", lambda, ")", "\n", "\n", sep="")
                         cat("Coefficients:", "\n")
                         structure(c(statistics()[[1]]), names=rownames(statistics()[[1]]))
                       },
