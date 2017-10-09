@@ -3,6 +3,7 @@
 #' @field formula A formula for the ridge regression
 #' @field data A data set for the ridge regression
 #' @field lambda The ridge constant, a numeric scalar
+#' @importFrom methods new
 #' @export ridgereg
 #' @exportClass ridgereg
 

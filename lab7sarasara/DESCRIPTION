@@ -1,9 +1,16 @@
 Package: lab7sarasara
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
+Title: Ridge regression
+Version: 0.0.1
 Date: 2017-10-09
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Sara Jesperson [aut, cre],
+        Sara Johansson [aut, cre]
+Maintainer: Sara Johansson <sarjo775@student.liu.se>
+Description: A package to fit a ridge regression model
+             to a data set after a formula specified by the user. 
+             A ridge constant, chosen by the user, is used.
+License: GPL-2
+Imports: methods
+RoxygenNote: 6.0.1
+
+
