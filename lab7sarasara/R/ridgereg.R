@@ -1,37 +1,5 @@
-library(MASS)
+#kom ihåg att använda scale på x variablerna i testen med lm.ridge
 
-?lm.ridge
-
-
-### Least squares
-lambda <- 1
-data <- iris[,1:4]
-formula <- Sepal.Length ~ Sepal.Width + Petal.Length
-
-y<-data[,colnames(data)==all.vars(formula)[1]]
-
-X<-model.matrix(object=formula, data=data)
-
-#Normalizing
-X[,2:ncol(X)] <- scale(X[,-1])
-
-#coefficients beta_ridge
-beta_ridge <- solve(t(X) %*% X + diag(lambda, nrow = ncol(X))) %*% (t(X) %*% y)
-
-#fitted values
-fitted_ridge <- X %*% beta_ridge
-
-
-#test - använd standardiserade variabler
-xxx <- scale(data[,2:4])
-daat <- data.frame(Sepal.Length=y, xxx)
-
-lm.ridge(formula, daat, lambda=2)
-
-
-
-
-##### CLASS #####
 ridgereg<-setRefClass("ridgereg",
                     fields=c("formula", 
                              "data", "lambda", "name"),
@@ -53,14 +21,64 @@ ridgereg<-setRefClass("ridgereg",
                       
                       statistics = function(){
                         "Fits a ridge regression model"
+                        
                         results <- list()
                         y<-data[,colnames(data)==all.vars(formula)[1]]
                         X<-model.matrix(object=formula, data=data)
                         X[,2:ncol(X)] <- scale(X[,-1]) #Normalizing
                         results$coef <- solve(t(X) %*% X + diag(lambda, nrow = ncol(X))) %*% (t(X) %*% y)
-                        results$fitted <- X %*% beta_ridge
+                        results$fitted <- X %*% results$coef
                         return(results)
+                      },
+                      
+                      print = function(){
+                        "Prints out the formula and the estimated coefficients"
+
+                        cat("Call:", "\n")
+                        cat("linreg(", deparse(formula), ")", "\n", "\n", sep="")
+                        cat("Coefficients:", "\n")
+                        structure(c(statistics()[[1]]), names=rownames(statistics()[[1]]))
+                      },
+                      
+                      predict = function(newdata=NULL){ #if newdata is used, it should be a data frame
+                        "Prints out the predicted values or if newdata is used, prints out predicted values for the new data set"
+                        
+                        if(is.null(newdata)){
+                          result <- structure(c(statistics()[[2]]), names=(1:length(statistics()[[2]])))
+                        } else{
+                          if(!is.data.frame(newdata)) stop("newdata is not a data frame")
+                          if(!all(all.vars(formula)%in%colnames(newdata))) stop("newdata doesn't match formula")
+                          if(!all(sapply(newdata[,colnames(newdata) %in% all.vars(formula)],is.numeric))) stop("newdata not numeric")
+                          
+                          X<-model.matrix(object=formula, data=newdata)
+                          X[,2:ncol(X)] <- scale(X[,-1])
+                          result <- (X %*% statistics()[[1]])[,1]
+                        }
+                        return(result)
+                      },
+                      
+                      coef = function(){
+                        "Prints out the estimated coefficients"
+                        
+                        structure(c(statistics()[[1]]), names=rownames(statistics()[[1]]))
                       }
                     ))
 
+
+
+
+
+#### Methods ####
+
+# lambda <- 1
+# data <- iris[,1:4]
+# formula <- Sepal.Length ~ Sepal.Width + Petal.Length
+# 
+# b <- ridgereg(data=data, formula=formula, lambda=lambda)
+# 
+# b$print()
+# b$predict()
+# 
+# newdata <- iris[45:50,1:4]
+# b$predict(newdata=newdata)
 
