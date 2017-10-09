@@ -1,0 +1,19 @@
+---
+title: "lab7sarasara: The ridgereg package"
+name: "ridgereg"
+author: "Sara Jesperson and Sara Johansson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r, echo=FALSE}
+library(lab7sarasara)
+library(caret)
+library(mlbench)
+```
+
