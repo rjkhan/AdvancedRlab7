@@ -10,6 +10,6 @@ Description: A package to fit a ridge regression model
              to a data set after a formula specified by the user. 
              A ridge constant, chosen by the user, is used.
 License: GPL-2
-Imports: methods
+Imports: methods, nycflights13
 RoxygenNote: 6.0.1
 Suggests: testthat, MASS
