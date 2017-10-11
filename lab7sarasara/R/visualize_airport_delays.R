@@ -9,14 +9,14 @@ visualize_airport_delays <- function(){
   airports <- nycflights13::airports[,c(1,3:4)]
   flights <- nycflights13::flights[,c(14,9)]
   flights <- na.omit(flights)
-  flights <- dplyr::summarise(dplyr::group_by(flights, flights$dest), delay = mean(flights$arr_delay))
+  flights <- dplyr::summarise(dplyr::group_by(flights, dest), delay = mean(arr_delay))
   airport_delays <- dplyr::inner_join(airports, flights, by=c("faa" = "dest"))
   
   ggplot2::ggplot(airport_delays, ggplot2::aes(x=airport_delays$lat, y=airport_delays$lon)) +
     ggplot2::geom_point(ggplot2::aes(size=airport_delays$delay), alpha=0.5, color="steelblue4") +
     ggplot2::theme_bw() +
     ggplot2::labs(title="Average arrival delays",
-                  subtitle="Longitud vs. Latitude",
+                  subtitle="Longitude vs. Latitude",
                   x="Latitude", y="Longitude",
                   size="Arrival delays") +
     ggplot2::theme(plot.title = ggplot2::element_text(hjust=0.5, size=16),
